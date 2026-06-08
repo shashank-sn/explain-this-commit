@@ -1,36 +1,133 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Explain This Commit
 
-## Getting Started
+**Translate any git diff, commit, or pull request into plain English — for founders, PMs, designers, QA, and everyone else.**
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## What It Does
+
+Paste a git diff. Get back:
+
+- **One-liner summary** — 5-10 words anyone can understand
+- **Executive summary** — what changed, why, what users will notice
+- **Business impact** — what customers see differently
+- **Risk score (0-100)** — with reasoning
+- **Multi-role views** — Founder, PM, QA, Developer (each in their language)
+- **Testing checklist** — specific test cases for QA
+- **Affected areas** — modules likely impacted
+- **Changelog entry** — ready for release notes
+- **Commit title suggestion** — conventional-commit style
+
+---
+
+## Why
+
+A typical git diff looks like:
+
+```diff
+- const user = await getUser(id)
++ const user = await getCachedUser(id)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+An engineer understands this. A founder, PM, or QA tester may not.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The real change is: *"User data is now retrieved from cache before hitting the database, improving performance and reducing server load."*
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Git shows code. People need meaning.
 
-## Learn More
+**Core principle: Never explain code. Explain intent.**
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Quick Start
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+# Clone
+git clone https://github.com/your-username/explain-this-commit.git
+cd explain-this-commit
 
-## Deploy on Vercel
+# Install
+npm install
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# Set your Anthropic API key
+cp .env.example .env
+# Edit .env and add your ANTHROPIC_API_KEY
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# Run database migrations
+npx prisma migrate dev
+
+# Start the dev server
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000).
+
+---
+
+## Tech Stack
+
+- **Frontend:** Next.js 16, React 19, TypeScript, Tailwind CSS 4
+- **Backend:** Next.js API Routes
+- **Database:** SQLite (via Prisma 7 + libSQL adapter)
+- **AI:** Anthropic Claude Sonnet 4
+
+---
+
+## Features
+
+- Paste any git diff or GitHub PR URL
+- Automatic change type classification (bug fix, feature, refactor, etc.)
+- Risk assessment with score and reasoning
+- Role-specific explanations (Founder, PM, QA, Developer)
+- Test case recommendations
+- Regression prediction (affected areas)
+- Changelog generator
+- Commit title generator
+- History dashboard of all analyses
+- Dark mode support
+
+---
+
+## API
+
+### POST `/api/analyze`
+
+```json
+{ "diff": "git diff here..." }
+// Returns: { id, title, oneLiner, stats }
+```
+
+### POST `/api/fetch-github`
+
+```json
+{ "url": "https://github.com/owner/repo/pull/123" }
+// Returns: { diff, prNumber, repo }
+```
+
+### GET `/api/report?id=xxx`
+
+Returns the full analysis report.
+
+### GET `/api/history`
+
+Returns recent analyses list.
+
+---
+
+## Open Source
+
+MIT License. Self-hostable. No vendor lock-in.
+
+---
+
+## Vision
+
+"Translate software development into plain English."
+
+Support any code change — git diffs, PRs, Claude Code sessions, Cursor edits, patch files. Build for the broader audience beyond developers: founders, PMs, designers, QA teams, technical writers, customer support, and junior engineers.
+
+---
+
+## License
+
+MIT

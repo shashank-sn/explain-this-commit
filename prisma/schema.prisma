@@ -1,0 +1,30 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Analysis {
+  id             String   @id @default(cuid())
+  title          String
+  rawDiff        String
+  oneLiner       String
+  detailedSummary String
+  businessImpact String?
+  riskScore      Int
+  riskReasoning  String
+  changeType     String
+  tags           String   @default("[]")
+  founderView    String?
+  pmView         String?
+  qaView         String?
+  devView        String?
+  changelog      String?
+  commitTitle    String?
+  testCases      String   @default("[]")
+  affectedAreas  String   @default("[]")
+  createdAt      DateTime @default(now())
+}
